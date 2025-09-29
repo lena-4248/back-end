@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.sirmium.departman.model.Departman;
 import com.sirmium.profesor.model.Profesor;
-import com.sirmium.tipstudija.model.TipStudija;
+import com.sirmium.tipStudija.model.TipStudija;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

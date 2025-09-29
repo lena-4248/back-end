@@ -1,7 +1,6 @@
 package com.sirmium.profesorPredmet.repository;
 
 import com.sirmium.profesorPredmet.model.TerminNastave;
-import com.sirmium.predmet.model.Predmet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,11 +12,8 @@ import java.util.List;
 @Repository
 public interface TerminNastaveRepository extends JpaRepository<TerminNastave, Long> {
     
-    List<TerminNastave> findByPredmet(Predmet predmet);
-    
-    List<TerminNastave> findByPredmetId(Long predmetId);
-    
-    List<TerminNastave> findByPredmetIdOrderByDatumVremeAsc(Long predmetId);
+    @Query("SELECT t FROM TerminNastave t WHERE t.predmet.id = :predmetId ORDER BY t.datumVreme ASC")
+    List<TerminNastave> findByPredmetIdOrderByDatumVremeAsc(@Param("predmetId") Long predmetId);
     
     @Query("SELECT t FROM TerminNastave t WHERE t.predmet.id = :predmetId AND t.datumVreme BETWEEN :start AND :end")
     List<TerminNastave> findByPredmetIdAndDatumVremeBetween(
@@ -31,4 +27,7 @@ public interface TerminNastaveRepository extends JpaRepository<TerminNastave, Lo
         @Param("predmetIds") List<Long> predmetIds,
         @Param("fromDate") LocalDateTime fromDate
     );
+    
+    @Query("SELECT t FROM TerminNastave t WHERE t.profesor.id = :profesorId AND t.datumVreme >= CURRENT_DATE")
+    List<TerminNastave> findBuduciTerminiByProfesor(@Param("profesorId") Long profesorId);
 }

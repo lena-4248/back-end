@@ -1,6 +1,6 @@
 package com.sirmium.user.service;
 
-import com.sirmium.auth.dto.RegistracijaRequestDTO;
+/*import com.sirmium.auth.dto.RegistracijaRequestDTO;
 import com.sirmium.user.dto.*;
 import com.sirmium.user.dto.Registrovani.ProfilDTO;
 import com.sirmium.user.model.User;
@@ -153,5 +153,36 @@ public class UserService {
         roleDTO.setNaziv(role.getNaziv());
         roleDTO.setAktivna(role.isAktivna());
         return roleDTO;
+    }
+}*/
+
+
+import com.sirmium.user.model.User;
+import com.sirmium.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    public User registerUser(User user) {
+        // Spring Data JPA automatski implementira save metodu
+        return userRepository.save(user);
+    }
+    
+    public Optional<User> findByEmail(String email) {
+        // Spring Data JPA automatski implementira findByEmail
+        return userRepository.findByEmail(email);
+    }
+    
+    public List<User> findActiveUsers() {
+        // Spring Data JPA automatski implementira findByDeletedFalse
+        return userRepository.findByDeletedFalse();
     }
 }

@@ -9,6 +9,7 @@ import com.sirmium.predmet.model.TipEvaluacije;
 import com.sirmium.predmet.repository.EvaluacijaZnanjaRepository;
 import com.sirmium.predmet.repository.PohadjanjePredmetaRepository;
 import com.sirmium.predmet.repository.TipEvaluacijeRepository;
+import com.sirmium.predmet.service.evaluacijaZnanja;
 import com.sirmium.profesorPredmet.repository.ProfesorPredmetRepository;
 import com.sirmium.student.dto.StudentPredmetDTO;
 import com.sirmium.student.model.Student;
