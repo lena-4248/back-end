@@ -7,32 +7,32 @@ public class IstorijaStudiranjaDTO {
     private String nazivPredmeta;
     private int brojPolaganja;
     private Integer ocena;
-    private int brojECTS;
+    private int brojESPB;
     private LocalDateTime datum;
     private String opis;
     private int brojBodova;
 
     public IstorijaStudiranjaDTO() {}
 
-    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojECTS, int brojBodova) {
+    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojESPB, int brojBodova) {
         this.nazivPredmeta = nazivPredmeta;
         this.brojPolaganja = brojPolaganja;
         this.ocena = ocena;
-        this.brojECTS = brojECTS;
+        this.brojESPB = brojESPB;
         this.brojBodova = brojBodova;
     }
 
-    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojECTS) {
-        this(nazivPredmeta, brojPolaganja, ocena, brojECTS, 0);
+    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojESPB) {
+        this(nazivPredmeta, brojPolaganja, ocena, brojESPB, 0);
     }
 
-    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojECTS, LocalDateTime datum) {
-        this(nazivPredmeta, brojPolaganja, ocena, brojECTS, 0);
+    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojESPB, LocalDateTime datum) {
+        this(nazivPredmeta, brojPolaganja, ocena, brojESPB, 0);
         this.datum = datum;
     }
 
-    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojECTS, LocalDateTime datum, String opis) {
-        this(nazivPredmeta, brojPolaganja, ocena, brojECTS, 0);
+    public IstorijaStudiranjaDTO(String nazivPredmeta, int brojPolaganja, Integer ocena, int brojESPB, LocalDateTime datum, String opis) {
+        this(nazivPredmeta, brojPolaganja, ocena, brojESPB, 0);
         this.datum = datum;
         this.opis = opis;
     }
@@ -62,12 +62,12 @@ public class IstorijaStudiranjaDTO {
         this.ocena = ocena;
     }
 
-    public int getBrojECTS() {
-        return brojECTS;
+    public int getBrojESPB() {
+        return brojESPB;
     }
 
-    public void setBrojECTS(int brojECTS) {
-        this.brojECTS = brojECTS;
+    public void setBrojESPB(int brojESPB) {
+        this.brojESPB = brojESPB;
     }
 
     public LocalDateTime getDatum() {

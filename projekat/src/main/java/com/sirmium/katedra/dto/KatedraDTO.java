@@ -5,7 +5,7 @@ import java.util.List;
 import com.sirmium.departman.dto.DepartmanDTO;
 import com.sirmium.predmet.dto.PredmetDTO;
 import com.sirmium.profesor.dto.ProfesorDTO;
-import com.sirmium.tipstudija.dto.TipStudijaDTO;
+import com.sirmium.tipStudija.dto.TipStudijaDTO;
 
 public class KatedraDTO {
 

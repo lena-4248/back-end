@@ -19,8 +19,8 @@ public class ProfesorPredmetService {
         this.profesorPredmetRepository = profesorPredmetRepository;
     }
     
-    public List<ProfesorPredmet> getAngazmaniByProfesor(Long profesorId) {
-        return profesorPredmetRepository.findByProfesorId(profesorId);
+    public List<ProfesorPredmet> getAngazmaniByProfesor(Long profesor) {
+        return profesorPredmetRepository.findByProfesorId(profesor);
     }
     
     public List<ProfesorPredmet> getAngazmaniByPredmet(Long predmetId) {

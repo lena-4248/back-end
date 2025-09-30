@@ -5,14 +5,14 @@ import java.util.List;
 public class StudentIstorijaStudiranjaResponseDTO {
     private List<IstorijaStudiranjaDTO> predmeti;
     private Double prosecnaOcena;
-    private int ukupnoECTS;
+    private int ukupnoESPB;
 
     public StudentIstorijaStudiranjaResponseDTO() {}
 
-    public StudentIstorijaStudiranjaResponseDTO(List<IstorijaStudiranjaDTO> predmeti, Double prosecnaOcena, int ukupnoECTS) {
+    public StudentIstorijaStudiranjaResponseDTO(List<IstorijaStudiranjaDTO> predmeti, Double prosecnaOcena, int ukupnoESPB) {
         this.predmeti = predmeti;
         this.prosecnaOcena = prosecnaOcena;
-        this.ukupnoECTS = ukupnoECTS;
+        this.ukupnoESPB = ukupnoESPB;
     }
 
     // Getteri i setteri
@@ -32,11 +32,11 @@ public class StudentIstorijaStudiranjaResponseDTO {
         this.prosecnaOcena = prosecnaOcena; 
     }
 
-    public int getUkupnoECTS() { 
-        return ukupnoECTS; 
+    public int getUkupnoESPB() { 
+        return ukupnoESPB; 
     }
     
-    public void setUkupnoECTS(int ukupnoECTS) { 
-        this.ukupnoECTS = ukupnoECTS; 
+    public void setUkupnoESPB(int ukupnoESPB) { 
+        this.ukupnoESPB = ukupnoESPB; 
     }
 }

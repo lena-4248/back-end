@@ -1,4 +1,4 @@
-package com.sirmium.osoblje.controller;
+/*package com.sirmium.osoblje.controller;
 
 import com.sirmium.osoblje.dto.TrebovanjeRequestDTO;
 import com.sirmium.osoblje.model.Osoblje;
@@ -62,4 +62,4 @@ public class TrebovanjeInventaraController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TrebovanjeInventara> odobriTrebovanje(@PathVariable Long id) {
         try {
-            TrebovanjeInventara trebovanje = trebovanjeService.odob
+            TrebovanjeInventara trebovanje = trebovanjeService.odob*/

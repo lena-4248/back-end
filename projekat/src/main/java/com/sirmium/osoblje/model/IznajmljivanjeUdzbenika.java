@@ -3,6 +3,8 @@ package com.sirmium.osoblje.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+import com.sirmium.student.model.Student;
+
 @Entity
 @Table(name = "iznajmljivanje_udzbenika")
 public class IznajmljivanjeUdzbenika {

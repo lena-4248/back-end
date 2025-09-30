@@ -1,136 +1,118 @@
 package com.sirmium.predmet.model;
 
-import com.sirmium.godinaStudija.model.GodinaStudija;
-import com.sirmium.katedra.model.Katedra;
-import com.sirmium.obavestenje.model.Obavestenje;
-import com.sirmium.profesorPredmet.model.ProfesorPredmet;
-import jakarta.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
+import com.sirmium.godinaStudija.model.GodinaStudija;
+import com.sirmium.obavestenje.model.Obavestenje;
+import com.sirmium.studijskiProgram.model.StudijskiProgram;
+
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "predmeti")
+@Table(name = "predmet")
 public class Predmet {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private String naziv;
+	private String opis;
+	private String sifra;
+	private int espb;
+	private int semestar;
+	private boolean aktivan = true;
 
-    @Column(nullable = false)
-    private String naziv;
+	@ManyToOne
+	@JoinColumn(name = "godina_studija_id")
+	private GodinaStudija godinaStudija;
 
-    @Column(nullable = false)
-    private int ects;
+	@ManyToOne
+	@JoinColumn(name = "studijski_program_id")
+	private StudijskiProgram studijskiProgram;
 
-    @Column(name = "informacije_o_predmetu")
-    private String informacijeOPredmetu;
-    
-    @Column(nullable = false)
-    private boolean deleted = false;
+	@OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL)
+	private List<Obavestenje> obavestenja;
 
-    @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProfesorPredmet> profesori;
+	public Predmet() {
+	}
 
-    @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PohadjanjePredmeta> pohadjanja = new ArrayList<>();
-    
-    @ManyToOne
-    @JoinColumn(name = "godina_studija_id", nullable = false)
-    private GodinaStudija godinaStudija;
-    
-    @OneToOne(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Silabus silabus;
-    
-    @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Obavestenje> obavestenja = new ArrayList<>();
+	public Long getId() {
+		return id;
+	}
 
-    public Predmet() {}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Predmet(String naziv, int ects, String informacijeOPredmetu, GodinaStudija godinaStudija) {
-        this.naziv = naziv;
-        this.ects = ects;
-        this.informacijeOPredmetu = informacijeOPredmetu;
-        this.godinaStudija = godinaStudija;
-    }
+	public String getNaziv() {
+		return naziv;
+	}
 
-    // Getteri i setteri
-    public Long getId() {
-        return id;
-    }
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getOpis() {
+		return opis;
+	}
 
-    public String getNaziv() {
-        return naziv;
-    }
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
 
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
+	public String getSifra() {
+		return sifra;
+	}
 
-    public int getEcts() {
-        return ects;
-    }
+	public void setSifra(String sifra) {
+		this.sifra = sifra;
+	}
 
-    public void setEcts(int ects) {
-        this.ects = ects;
-    }
+	public int getEspb() {
+		return espb;
+	}
 
-    public String getInformacijeOPredmetu() {
-        return informacijeOPredmetu;
-    }
+	public void setEspb(int espb) {
+		this.espb = espb;
+	}
 
-    public void setInformacijeOPredmetu(String informacijeOPredmetu) {
-        this.informacijeOPredmetu = informacijeOPredmetu;
-    }
+	public int getSemestar() {
+		return semestar;
+	}
 
-    public boolean isDeleted() {
-        return deleted;
-    }
+	public void setSemestar(int semestar) {
+		this.semestar = semestar;
+	}
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
+	public boolean isAktivan() {
+		return aktivan;
+	}
 
-    public List<ProfesorPredmet> getProfesori() {
-        return profesori;
-    }
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
+	}
 
-    public void setProfesori(List<ProfesorPredmet> profesori) {
-        this.profesori = profesori;
-    }
+	public GodinaStudija getGodinaStudija() {
+		return godinaStudija;
+	}
 
-    public List<PohadjanjePredmeta> getPohadjanja() {
-        return pohadjanja;
-    }
+	public void setGodinaStudija(GodinaStudija godinaStudija) {
+		this.godinaStudija = godinaStudija;
+	}
 
-    public void setPohadjanja(List<PohadjanjePredmeta> pohadjanja) {
-        this.pohadjanja = pohadjanja;
-    }
+	public StudijskiProgram getStudijskiProgram() {
+		return studijskiProgram;
+	}
 
-    public GodinaStudija getGodinaStudija() {
-        return godinaStudija;
-    }
+	public void setStudijskiProgram(StudijskiProgram studijskiProgram) {
+		this.studijskiProgram = studijskiProgram;
+	}
 
-    public void setGodinaStudija(GodinaStudija godinaStudija) {
-        this.godinaStudija = godinaStudija;
-    }
+	public List<Obavestenje> getObavestenja() {
+		return obavestenja;
+	}
 
-    public Silabus getSilabus() {
-        return silabus;
-    }
-
-    public void setSilabus(Silabus silabus) {
-        this.silabus = silabus;
-    }
-
-    public List<Obavestenje> getObavestenja() {
-        return obavestenja;
-    }
-
-    public void setObavestenja(List<Obavestenje> obavestenja) {
-        this.obavestenja = obavestenja;
-    }
+	public void setObavestenja(List<Obavestenje> obavestenja) {
+		this.obavestenja = obavestenja;
+	}
 }

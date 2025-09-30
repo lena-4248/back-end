@@ -121,4 +121,9 @@ public class UserDTO {
     public void setAktiviran(boolean aktiviran) {
         this.aktiviran = aktiviran;
     }
+
+	public Object map(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

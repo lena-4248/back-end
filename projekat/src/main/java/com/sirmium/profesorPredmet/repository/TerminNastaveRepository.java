@@ -29,5 +29,5 @@ public interface TerminNastaveRepository extends JpaRepository<TerminNastave, Lo
     );
     
     @Query("SELECT t FROM TerminNastave t WHERE t.profesor.id = :profesorId AND t.datumVreme >= CURRENT_DATE")
-    List<TerminNastave> findBuduciTerminiByProfesor(@Param("profesorId") Long profesorId);
+    List<TerminNastave> findBuduciTerminiByProfesor(@Param("profesorId") Long profesorId);//
 }

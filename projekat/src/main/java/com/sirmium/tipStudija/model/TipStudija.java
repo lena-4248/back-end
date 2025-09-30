@@ -1,5 +1,7 @@
 package com.sirmium.tipStudija.model;
 
+import com.sirmium.katedra.model.Katedra;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +23,10 @@ public class TipStudija {
     
     @Column
     private Boolean aktiv = true;
+    
+    @ManyToOne
+    @JoinColumn(name = "katedra_id")
+    private Katedra katedra;
 
     // Konstruktori
     public TipStudija() {}
@@ -45,4 +51,7 @@ public class TipStudija {
     
     public Boolean getAktiv() { return aktiv; }
     public void setAktiv(Boolean aktiv) { this.aktiv = aktiv; }
+    
+    public Katedra getKatedra() { return katedra; }
+    public void setKatedra(Katedra katedra) { this.katedra = katedra; }
 }

@@ -1,6 +1,8 @@
 package com.sirmium.osoblje.repository;
 
 import com.sirmium.osoblje.model.Osoblje;
+import com.sirmium.user.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface OsobljeRepository extends JpaRepository<Osoblje, Long> {
-    Optional<Osoblje> findByUserId(Long userId);
+    Optional<Osoblje> findByUserId(User user);
     Optional<Osoblje> findByUserEmail(String email);
     
     @Query("SELECT o FROM Osoblje o WHERE o.pozicija = :pozicija")

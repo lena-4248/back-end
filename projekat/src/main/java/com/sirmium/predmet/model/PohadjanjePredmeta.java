@@ -17,7 +17,6 @@ public class PohadjanjePredmeta {
     private Integer ocena;
     private int brojPolaganja;
     private boolean aktivan;
-
     private LocalDateTime datumPocetka;
     private LocalDateTime datumZavrsetka;
 
@@ -35,8 +34,8 @@ public class PohadjanjePredmeta {
     @OneToMany(mappedBy = "pohadjanje", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrijavaIspita> prijaveIspita = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pohadjanje", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EvaluacijaZnanja> evaluacije = new ArrayList<>();
+    /*@OneToMany(mappedBy = "pohadjanje", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EvaluacijaZnanja> evaluacije = new ArrayList<>();*/
 
     public PohadjanjePredmeta() {}
 
@@ -133,11 +132,11 @@ public class PohadjanjePredmeta {
         this.prijaveIspita = prijaveIspita;
     }
 
-    public List<EvaluacijaZnanja> getEvaluacije() {
+    /*public List<EvaluacijaZnanja> getEvaluacije() {
         return evaluacije;
     }
 
     public void setEvaluacije(List<EvaluacijaZnanja> evaluacije) {
         this.evaluacije = evaluacije;
-    }
+    }*/
 }

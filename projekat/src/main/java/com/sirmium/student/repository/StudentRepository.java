@@ -17,9 +17,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT s FROM Student s WHERE s.godinaUpisa = :godina")
     List<Student> findByGodinaUpisa(@Param("godina") int godinaUpisa);
     
-    @Query("SELECT s FROM Student s WHERE s.smer = :smer")
-    List<Student> findBySmer(@Param("smer") String smer);
-    
     @Query("SELECT s FROM Student s WHERE s.prosecnaOcena >= :minOcena")
     List<Student> findByProsecnaOcenaGreaterThanEqual(@Param("minOcena") double minOcena);
     

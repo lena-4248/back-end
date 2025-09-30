@@ -19,12 +19,8 @@ public class OsobljeService {
         this.osobljeRepository = osobljeRepository;
     }
     
-    public Optional<Osoblje> findByUser(User user) {
-        return osobljeRepository.findByUser(user);
-    }
-    
-    public Optional<Osoblje> findByUserId(Long userId) {
-        return osobljeRepository.findByUserId(userId);
+    public Optional<Osoblje> findByUserId(User user) {
+        return osobljeRepository.findByUserId(user);
     }
     
     public Osoblje save(Osoblje osoblje) {
@@ -44,6 +40,6 @@ public class OsobljeService {
     }
     
     public boolean isOsoblje(User user) {
-        return osobljeRepository.findByUser(user).isPresent();
+        return osobljeRepository.findByUserId(user).isPresent();
     }
 }

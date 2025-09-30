@@ -12,8 +12,12 @@ import java.util.List;
 
 @Repository
 public interface ProfesorPredmetRepository extends JpaRepository<ProfesorPredmet, Long> {
+	
+	List<ProfesorPredmet> findByPredmetId(Long predmetId);
+    List<ProfesorPredmet> findByProfesorId(Long profesorId);
+    List<ProfesorPredmet> findByProfesorIdAndSemestar(Long profesorId, int semestar);
     
-    List<ProfesorPredmet> findByProfesor(Profesor profesor);
+    /*List<ProfesorPredmet> findByProfesor(Profesor profesor);
     
     List<ProfesorPredmet> findByPredmet(Predmet predmet);
     
@@ -28,5 +32,5 @@ public interface ProfesorPredmetRepository extends JpaRepository<ProfesorPredmet
     boolean existsByProfesorAndPredmet(Profesor profesor, Predmet predmet);
     
     @Query("SELECT np FROM NastavnikPredmet np WHERE np.profesor.id = :profesorId AND np.predmet.semestar = :semestar")
-    List<ProfesorPredmet> findByProfesorIdAndSemestar(@Param("profesorId") Long profesorId, @Param("semestar") int semestar);
+    List<ProfesorPredmet> findByProfesorIdAndSemestar(@Param("profesorId") Long profesorId, @Param("semestar") int semestar);*/
 }

@@ -12,54 +12,56 @@ import java.util.List;
 @RequestMapping("/api/predmeti")
 public class PredmetController {
 
+    private final PredmetService predmetService; // koristite 'predmetService'
+
     @Autowired
-    private PredmetService service;
+    public PredmetController(PredmetService predmetService) {
+        this.predmetService = predmetService;
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'SLUZBENIK')")
     public PredmetDTO create(@RequestBody PredmetDTO dto) {
-        return service.create(dto);
+        return predmetService.create(dto); // koristite 'predmetService'
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'SLUZBENIK')")
     public List<PredmetDTO> getAll() {
-        return service.findAll();
+        return predmetService.findAll(); // koristite 'predmetService'
     }
     
     @GetMapping
     public List<PredmetDTO> getAktivni() {
-        return service.findAllAktivni();
+        return predmetService.findAllAktivni(); // koristite 'predmetService'
     }
 
     @PutMapping("/{id}/aktiviraj")
     @PreAuthorize("hasAnyRole('ADMIN', 'SLUZBENIK')")
     public PredmetDTO aktiviraj(@PathVariable Long id) {
-        // Ovo ćeš morati da rešiš - bolje je dodati metode u service interfejs
-        return service.findById(id); // Privremeno rešenje
+        return predmetService.aktiviraj(id); // koristite 'predmetService'
     }
 
     @PutMapping("/{id}/deaktiviraj")
     @PreAuthorize("hasAnyRole('ADMIN', 'SLUZBENIK')")
     public PredmetDTO deaktiviraj(@PathVariable Long id) {
-        // Ovo ćeš morati da rešiš - bolje je dodati metode u service interfejs
-        return service.findById(id); // Privremeno rešenje
+        return predmetService.deaktiviraj(id); // koristite 'predmetService'
     }
 
     @GetMapping("/{id}")
     public PredmetDTO getById(@PathVariable Long id) {
-        return service.findById(id);
+        return predmetService.findById(id); // koristite 'predmetService'
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'SLUZBENIK')")
     public PredmetDTO update(@PathVariable Long id, @RequestBody PredmetDTO dto) {
-        return service.update(id, dto);
+        return predmetService.update(id, dto); // koristite 'predmetService'
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'SLUZBENIK')")
     public void delete(@PathVariable Long id) {
-        service.delete(id);
+        predmetService.delete(id); // koristite 'predmetService'
     }
 }

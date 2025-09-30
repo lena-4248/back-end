@@ -1,86 +1,81 @@
 package com.sirmium.predmet.dto;
 
 public class PredmetDTO {
-
     private Long id;
     private String naziv;
-    private int ects;
-    private String informacijeOPredmetu;
-    private Long godinaStudijaId;
-    private boolean deleted;
-    private String godinaISmer;
-
+    private String opis;
+    private String sifra;
+    private int espb;
+    private int semestar;
+    private boolean aktivan;
+    
     public PredmetDTO() {}
-
-    public PredmetDTO(Long id, String naziv, int ects, String informacijeOPredmetu, Long godinaStudijaId) {
-        this.id = id;
-        this.naziv = naziv;
-        this.ects = ects;
-        this.informacijeOPredmetu = informacijeOPredmetu;
-        this.godinaStudijaId = godinaStudijaId;
-    }
-
-    public PredmetDTO(Long id, String naziv, int ects, String informacijeOPredmetu) {
-        this.id = id;
-        this.naziv = naziv;
-        this.ects = ects;
-        this.informacijeOPredmetu = informacijeOPredmetu;
-    }
-
-    // Getteri i setteri
-    public Long getId() { 
-        return id; 
-    }
     
-    public void setId(Long id) { 
-        this.id = id; 
-    }
+	public PredmetDTO(Long id, String naziv, String opis, String sifra, int espb, int semestar, boolean aktivan) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+		this.opis = opis;
+		this.sifra = sifra;
+		this.espb = espb;
+		this.semestar = semestar;
+		this.aktivan = aktivan;
+	}
 
-    public String getNaziv() { 
-        return naziv; 
-    }
-    
-    public void setNaziv(String naziv) { 
-        this.naziv = naziv; 
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public int getEcts() { 
-        return ects; 
-    }
-    
-    public void setEcts(int ects) { 
-        this.ects = ects; 
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getInformacijeOPredmetu() { 
-        return informacijeOPredmetu; 
-    }
-    
-    public void setInformacijeOPredmetu(String informacijeOPredmetu) { 
-        this.informacijeOPredmetu = informacijeOPredmetu; 
-    }
+	public String getNaziv() {
+		return naziv;
+	}
 
-    public Long getGodinaStudijaId() { 
-        return godinaStudijaId; 
-    }
-    
-    public void setGodinaStudijaId(Long godinaStudijaId) { 
-        this.godinaStudijaId = godinaStudijaId; 
-    }
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
 
-    public boolean isDeleted() { 
-        return deleted; 
-    }
-    
-    public void setDeleted(boolean deleted) { 
-        this.deleted = deleted; 
-    }
+	public String getOpis() {
+		return opis;
+	}
 
-    public String getGodinaISmer() { 
-        return godinaISmer; 
-    }
-    
-    public void setGodinaISmer(String godinaISmer) { 
-        this.godinaISmer = godinaISmer; 
-    }
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public String getSifra() {
+		return sifra;
+	}
+
+	public void setSifra(String sifra) {
+		this.sifra = sifra;
+	}
+
+	public int getEspb() {
+		return espb;
+	}
+
+	public void setEspb(int espb) {
+		this.espb = espb;
+	}
+
+	public int getSemestar() {
+		return semestar;
+	}
+
+	public void setSemestar(int semestar) {
+		this.semestar = semestar;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
+	}
+
 }

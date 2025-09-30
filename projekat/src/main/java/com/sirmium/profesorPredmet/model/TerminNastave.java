@@ -18,13 +18,23 @@ public class TerminNastave {
     private Predmet predmet;
     
     @ManyToOne
+    @JoinColumn(name = "profesor_id")
+    private Predmet profesor;
+    
+    @ManyToOne
     @JoinColumn(name = "ishod_id")
     private Ishod ishod;
     
     @Column(nullable = false)
     private LocalDateTime datumVreme;
     
-    @Column(nullable = false, length = 1000)
+    public Predmet getProfesor() {
+		return profesor;
+	}
+	public void setProfesor(Predmet profesor) {
+		this.profesor = profesor;
+	}
+	@Column(nullable = false, length = 1000)
     private String tema;
     
     @Column(length = 3000)

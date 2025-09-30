@@ -1,108 +1,104 @@
 package com.sirmium.fakultet.dto;
 
-import java.util.List;
-
-import com.sirmium.departman.dto.DepartmanDTO;
-import com.sirmium.profesor.dto.ProfesorDTO;
-import com.sirmium.univerzitet.dto.UniverzitetDTO;
-
 public class FakultetDTO {
+	private Long id;
+	private String naziv;
+	private String email;
+	private String lokacija;
+	private String brojTelefona;
+	private String opis;
+	private boolean deleted;
+	private Long univerzitetId;
+	private String univerzitetNaziv;
+	private Long dekanId;
+	private String dekanIme;
 
-    private Long id;
-    private String naziv;
-    private String email;
-    private UniverzitetDTO univerzitet;
-    private ProfesorDTO dekan;
-    private List<DepartmanDTO> departmani;
-    private String opis;
-    private String lokacija;
-    private String brojTelefona;
+	// Getteri i setteri
+	public Long getId() {
+		return id;
+	}
 
-    public FakultetDTO() {}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public FakultetDTO(Long id, String naziv, String email, UniverzitetDTO univerzitet, ProfesorDTO dekan,
-            List<DepartmanDTO> departmani, String opis, String lokacija, String brojTelefona) {
-        super();
-        this.id = id;
-        this.naziv = naziv;
-        this.email = email;
-        this.univerzitet = univerzitet;
-        this.dekan = dekan;
-        this.departmani = departmani;
-        this.opis = opis;
-        this.lokacija = lokacija;
-        this.brojTelefona = brojTelefona;
-    }
+	public String getNaziv() {
+		return naziv;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getNaziv() {
-        return naziv;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
+	public String getLokacija() {
+		return lokacija;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setLokacija(String lokacija) {
+		this.lokacija = lokacija;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getBrojTelefona() {
+		return brojTelefona;
+	}
 
-    public UniverzitetDTO getUniverzitet() {
-        return univerzitet;
-    }
+	public void setBrojTelefona(String brojTelefona) {
+		this.brojTelefona = brojTelefona;
+	}
 
-    public void setUniverzitet(UniverzitetDTO univerzitet) {
-        this.univerzitet = univerzitet;
-    }
+	public String getOpis() {
+		return opis;
+	}
 
-    public ProfesorDTO getDekan() {
-        return dekan;
-    }
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
 
-    public void setDekan(ProfesorDTO dekan) {
-        this.dekan = dekan;
-    }
+	public boolean isDeleted() {
+		return deleted;
+	}
 
-    public List<DepartmanDTO> getDepartmani() {
-        return departmani;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
-    public void setDepartmani(List<DepartmanDTO> departmani) {
-        this.departmani = departmani;
-    }
+	public Long getUniverzitetId() {
+		return univerzitetId;
+	}
 
-    public String getOpis() {
-        return opis;
-    }
+	public void setUniverzitetId(Long univerzitetId) {
+		this.univerzitetId = univerzitetId;
+	}
 
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
+	public String getUniverzitetNaziv() {
+		return univerzitetNaziv;
+	}
 
-    public String getLokacija() {
-        return lokacija;
-    }
+	public void setUniverzitetNaziv(String univerzitetNaziv) {
+		this.univerzitetNaziv = univerzitetNaziv;
+	}
 
-    public void setLokacija(String lokacija) {
-        this.lokacija = lokacija;
-    }
+	public Long getDekanId() {
+		return dekanId;
+	}
 
-    public String getBrojTelefona() {
-        return brojTelefona;
-    }
+	public void setDekanId(Long dekanId) {
+		this.dekanId = dekanId;
+	}
 
-    public void setBrojTelefona(String brojTelefona) {
-        this.brojTelefona = brojTelefona;
-    }
+	public String getDekanIme() {
+		return dekanIme;
+	}
+
+	public void setDekanIme(String dekanIme) {
+		this.dekanIme = dekanIme;
+	}
 }

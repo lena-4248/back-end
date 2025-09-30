@@ -2,11 +2,9 @@ package com.sirmium.studijskiProgram.service;
 
 import com.sirmium.studijskiProgram.model.StudijskiProgram;
 import com.sirmium.studijskiProgram.repository.StudijskiProgramRepository;
-import com.sirmium.fakultet.model.Fakultet;
 import com.sirmium.fakultet.repository.FakultetRepository;
 import com.sirmium.profesor.model.Profesor;
 import com.sirmium.profesor.repository.ProfesorRepository;
-import com.sirmium.tipStudija.model.TipStudija;
 import com.sirmium.tipStudija.repository.TipStudijaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

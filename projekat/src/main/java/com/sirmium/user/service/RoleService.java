@@ -42,8 +42,11 @@ public class RoleService {
 
     // Deaktivacija uloge
     public void deaktivirajUlogu(Long roleId) {
-        roleRepository.deaktivirajUlogu(roleId);
-    }
+        Role uloga = roleRepository.findById(roleId)
+            .orElseThrow(() -> new RuntimeException("Uloga nije pronađena"));
+
+        uloga.setAktivna(false);
+        roleRepository.save(uloga);}
 
     // Dobavljanje uloge po ID-u
     public RoleDTO dobaviUloguPoId(Long roleId) {

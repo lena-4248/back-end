@@ -37,7 +37,4 @@ public class PotvrdaService {
     
     public List<Potvrda> getPotvrdeByStatus(String status) {
         return potvrdaRepository.findByStatus(status);
-    }
-    
-    List<Potvrda> findIzdanePotvrdeByTip(@Param("tipPotvrde") String tipPotvrde);
-    }
+    }}

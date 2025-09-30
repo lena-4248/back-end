@@ -22,7 +22,7 @@ public class AuthController {
         this.authService = authService;
         this.userService = userService;
     }
-
+    
     @PostMapping("/prijava")
     public ResponseEntity<PrijavaResponseDTO> prijava(
             @Valid @RequestBody PrijavaRequestDTO prijavaDTO) {
@@ -57,5 +57,24 @@ public class AuthController {
     public ResponseEntity<Void> odjava() {
         authService.odjaviKorisnika();
         return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/test-prijava")
+    public ResponseEntity<String> testPrijava(@RequestBody String rawBody) {
+        System.out.println("Primljen body: " + rawBody);
+        return ResponseEntity.ok("Body primljen: " + rawBody);
+    }
+    
+    @GetMapping("/status")
+    public ResponseEntity<String> status() {
+        return ResponseEntity.ok("Auth servis radi - ");
+    }
+    @GetMapping("/public/status")
+    public ResponseEntity<String> publicStatus() {
+        return ResponseEntity.ok("PUBLIC Auth servis radi - ");
+    }
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Auth endpoint radi! ");
     }
 }

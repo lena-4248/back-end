@@ -1,5 +1,6 @@
 package com.sirmium.student.controller;
 
+import com.sirmium.obavestenje.dto.ObavestenjeDTO;
 import com.sirmium.student.dto.StudentDTO;
 import com.sirmium.student.dto.StudentPredmetDTO;
 import com.sirmium.student.service.StudentService;
@@ -53,7 +54,7 @@ public class StudentController {
     // METODE KOJE ĆEŠ DODATI KASNIJE KADA NAPRAVIŠ PREDMET PAKET:
     
     // 4. Pregled obaveštenja - dodati kada napraviš Predmet paket
-    @GetMapping("/{studentId}/obavestenja")
+ /*   @GetMapping("/{studentId}/obavestenja")
     public ResponseEntity<List<ObavestenjeDTO>> getObavestenja(@PathVariable Long studentId) {
         List<ObavestenjeDTO> obavestenja = studentService.getObavestenjaZaStudenta(studentId);
         return ResponseEntity.ok(obavestenja);
@@ -64,6 +65,6 @@ public class StudentController {
     public ResponseEntity<IstorijaStudiranjaDTO> getIstorijaStudiranja(@PathVariable Long studentId) {
         IstorijaStudiranjaDTO istorija = studentService.getIstorijaStudiranja(studentId);
         return ResponseEntity.ok(istorija);
-    }
+    }*/
     
 }

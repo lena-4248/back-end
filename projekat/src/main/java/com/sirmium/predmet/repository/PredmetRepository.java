@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PredmetRepository extends JpaRepository<Predmet, Long> {
-    Optional<Predmet> findBySifra(String sifra);
+    /*Optional<Predmet> findBySifra(String sifra);
     
     @Query("SELECT p FROM Predmet p WHERE p.studijskiProgram.id = :programId")
     List<Predmet> findByStudijskiProgramId(@Param("programId") Long programId);
@@ -24,4 +24,5 @@ public interface PredmetRepository extends JpaRepository<Predmet, Long> {
     
     @Query("SELECT p FROM Predmet p WHERE p.espb = :espb")
     List<Predmet> findByEspb(@Param("espb") int espb);
+    */
 }

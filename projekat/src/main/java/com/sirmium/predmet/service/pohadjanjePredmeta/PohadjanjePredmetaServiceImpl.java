@@ -113,7 +113,7 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
                     p.getPredmet().getNaziv(),
                     p.getBrojPolaganja(),
                     p.getOcena(), 
-                    p.getPredmet().getEcts()
+                    p.getPredmet().getEspb()
             ))
             .collect(Collectors.toList());
 
@@ -125,12 +125,12 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
         double prosecnaOcena = ocene.isEmpty() ? 0.0 :
             ocene.stream().mapToInt(o -> o).average().orElse(0.0);
 
-        int ukupnoECTS = pohadjanja.stream()
+        int ukupnoESPB = pohadjanja.stream()
             .filter(p -> p.getOcena() != null) 
-            .mapToInt(p -> p.getPredmet().getEcts())
+            .mapToInt(p -> p.getPredmet().getEspb())
             .sum();
 
-        return new StudentIstorijaStudiranjaResponseDTO(predmetiDTO, prosecnaOcena, ukupnoECTS);
+        return new StudentIstorijaStudiranjaResponseDTO(predmetiDTO, prosecnaOcena, ukupnoESPB);
     }
     
     public StudentIstorijaStudiranjaResponseDTOProfesor getIstorijaStudiranjaZaProfesora(Long studentId) {
@@ -141,7 +141,7 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
                     p.getPredmet().getNaziv(),
                     p.getBrojPolaganja(),
                     p.getOcena(), 
-                    p.getPredmet().getEcts()
+                    p.getPredmet().getEspb()
             ))
             .collect(Collectors.toList());
 
@@ -153,9 +153,9 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
         double prosecnaOcena = ocene.isEmpty() ? 0.0 :
             ocene.stream().mapToInt(o -> o).average().orElse(0.0);
 
-        int ukupnoECTS = pohadjanja.stream()
+        int ukupnoESPB = pohadjanja.stream()
             .filter(p -> p.getOcena() != null) 
-            .mapToInt(p -> p.getPredmet().getEcts())
+            .mapToInt(p -> p.getPredmet().getEspb())
             .sum();
 
         return new StudentIstorijaStudiranjaResponseDTOProfesor(
@@ -166,7 +166,7 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
             new ArrayList<>(),         // prestupi
             null,                      // zavrsni rad
             prosecnaOcena,
-            ukupnoECTS
+            ukupnoESPB
         );
     }
     

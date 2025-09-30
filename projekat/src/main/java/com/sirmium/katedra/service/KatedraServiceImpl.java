@@ -1,25 +1,20 @@
 package com.sirmium.katedra.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.sirmium.katedra.dto.KatedraCreateUpdateDTO;
 import com.sirmium.katedra.dto.KatedraDTO;
 import com.sirmium.katedra.model.Katedra;
 import com.sirmium.katedra.repository.KatedraRepository;
+import com.sirmium.katedra.service.KatedraService;
 import com.sirmium.departman.model.Departman;
 import com.sirmium.departman.repository.DepartmanRepository;
-import com.sirmium.tipstudija.model.TipStudija;
-import com.sirmium.tipstudija.repository.TipStudijaRepository;
 import com.sirmium.profesor.model.Profesor;
 import com.sirmium.profesor.repository.ProfesorRepository;
-import com.sirmium.profesor.service.ProfesorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,248 +22,196 @@ public class KatedraServiceImpl implements KatedraService {
 
     private final KatedraRepository katedraRepository;
     private final DepartmanRepository departmanRepository;
-    private final TipStudijaRepository tipStudijaRepository;
     private final ProfesorRepository profesorRepository;
-    
-    @Autowired
-    private ProfesorService profesorService;
 
+    @Autowired
     public KatedraServiceImpl(KatedraRepository katedraRepository,
-                              DepartmanRepository departmanRepository,
-                              TipStudijaRepository tipStudijaRepository,
-                              ProfesorRepository profesorRepository) {
+                             DepartmanRepository departmanRepository,
+                             ProfesorRepository profesorRepository) {
         this.katedraRepository = katedraRepository;
         this.departmanRepository = departmanRepository;
-        this.tipStudijaRepository = tipStudijaRepository;
         this.profesorRepository = profesorRepository;
     }
 
     @Override
     public KatedraDTO create(KatedraDTO dto) {
-        Katedra entity = toEntity(dto);
-        entity = katedraRepository.save(entity);
-        return toDTO(entity);
+        Departman departman = departmanRepository.findById(dto.getDepartman().getId())
+            .orElseThrow(() -> new RuntimeException("Departman nije pronađen"));
+
+        Profesor sefKatedre = null;
+        if (dto.getSefKatedre() != null && dto.getSefKatedre().getId() != null) {
+            sefKatedre = profesorRepository.findById(dto.getSefKatedre().getId())
+                .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+        }
+
+        Katedra katedra = new Katedra();
+        katedra.setNaziv(dto.getNaziv());
+        katedra.setOpis(dto.getOpis());
+        katedra.setDepartman(departman);
+        katedra.setSefKatedre(sefKatedre);
+        katedra.setDeleted(false);
+
+        Katedra savedKatedra = katedraRepository.save(katedra);
+        return toDTO(savedKatedra);
+    }
+
+    @Override
+    public KatedraDTO create(KatedraCreateUpdateDTO dto) {
+        Departman departman = departmanRepository.findById(dto.getDepartmanId())
+            .orElseThrow(() -> new RuntimeException("Departman nije pronađen"));
+
+        Profesor sefKatedre = null;
+        if (dto.getSefKatedreId() != null) {
+            sefKatedre = profesorRepository.findById(dto.getSefKatedreId())
+                .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+        }
+
+        Katedra katedra = new Katedra();
+        katedra.setNaziv(dto.getNaziv());
+        katedra.setOpis(dto.getOpis());
+        katedra.setDepartman(departman);
+        katedra.setSefKatedre(sefKatedre);
+        katedra.setDeleted(false);
+
+        Katedra savedKatedra = katedraRepository.save(katedra);
+        return toSimpleDTO(savedKatedra);
     }
 
     @Override
     public List<KatedraDTO> findAll() {
         return katedraRepository.findAll().stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+            .map(this::toDTO)
+            .collect(Collectors.toList());
     }
 
     @Override
     public KatedraDTO findById(Long id) {
-        Katedra entity = katedraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Katedra sa ID " + id + " nije pronađena."));
-        return toDTO(entity);
-    }
-    
-    @Override
-    public List<KatedraDTO> findByDepartmanId(Long departmanId) {
-        return katedraRepository.findByDepartmanId(departmanId)
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    public List<KatedraDTO> findAllAktivne() {
-        return katedraRepository.findByDeletedFalse()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        Katedra katedra = katedraRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Katedra nije pronađena"));
+        return toDTO(katedra);
     }
 
     @Override
-    public List<KatedraDTO> findAllAdmin() {
-        return katedraRepository.findAllSortiranoPoAktivnostiIFakultetu()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
+    public KatedraDTO update(Long id, KatedraDTO dto) {
+        Katedra katedra = katedraRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Katedra nije pronađena"));
 
-    @Override
-    public List<KatedraDTO> findAktivneByDepartmanId(Long departmanId) {
-        return katedraRepository.findByDepartmanIdAndDeletedFalse(departmanId)
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
+        Departman departman = departmanRepository.findById(dto.getDepartman().getId())
+            .orElseThrow(() -> new RuntimeException("Departman nije pronađen"));
 
-    @Override
-    public void setDeleted(Long id, boolean deleted) {
-        Katedra entity = katedraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Katedra nije pronađena"));
-        entity.setDeleted(deleted);
-        katedraRepository.save(entity);
-    }
-    
-    @Override
-    public KatedraDTO create(KatedraCreateUpdateDTO dto) {
-        Katedra katedra = new Katedra();
+        Profesor sefKatedre = null;
+        if (dto.getSefKatedre() != null && dto.getSefKatedre().getId() != null) {
+            sefKatedre = profesorRepository.findById(dto.getSefKatedre().getId())
+                .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+        }
+
         katedra.setNaziv(dto.getNaziv());
         katedra.setOpis(dto.getOpis());
-        katedra.setDeleted(false);
+        katedra.setDepartman(departman);
+        katedra.setSefKatedre(sefKatedre);
 
-        if (dto.getSefKatedreId() != null) {
-            Profesor sef = profesorRepository.findById(dto.getSefKatedreId())
-                    .orElseThrow(() -> new EntityNotFoundException("Profesor nije pronađen"));
-            katedra.setSefKatedre(sef);
-        }
-
-        if (dto.getDepartmanId() != null) {
-            Departman departman = departmanRepository.findById(dto.getDepartmanId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departman nije pronađen"));
-            katedra.setDepartman(departman);
-        }
-
-        return toDTO(katedraRepository.save(katedra));
+        Katedra updatedKatedra = katedraRepository.save(katedra);
+        return toDTO(updatedKatedra);
     }
 
     @Override
     public KatedraDTO update(Long id, KatedraCreateUpdateDTO dto) {
         Katedra katedra = katedraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Katedra nije pronađena"));
+            .orElseThrow(() -> new RuntimeException("Katedra nije pronađena"));
+
+        Departman departman = departmanRepository.findById(dto.getDepartmanId())
+            .orElseThrow(() -> new RuntimeException("Departman nije pronađen"));
+
+        Profesor sefKatedre = null;
+        if (dto.getSefKatedreId() != null) {
+            sefKatedre = profesorRepository.findById(dto.getSefKatedreId())
+                .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+        }
 
         katedra.setNaziv(dto.getNaziv());
         katedra.setOpis(dto.getOpis());
+        katedra.setDepartman(departman);
+        katedra.setSefKatedre(sefKatedre);
 
-        if (dto.getSefKatedreId() != null) {
-            Profesor sef = profesorRepository.findById(dto.getSefKatedreId())
-                    .orElseThrow(() -> new EntityNotFoundException("Profesor nije pronađen"));
-            katedra.setSefKatedre(sef);
-        } else {
-            katedra.setSefKatedre(null);
-        }
-
-        if (dto.getDepartmanId() != null) {
-            Departman departman = departmanRepository.findById(dto.getDepartmanId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departman nije pronađen"));
-            katedra.setDepartman(departman);
-        } else {
-            katedra.setDepartman(null);
-        }
-
-        return toDTO(katedraRepository.save(katedra));
-    }
-
-    @Override
-    public KatedraDTO update(Long id, KatedraDTO dto) {
-        Katedra entity = katedraRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Katedra sa ID " + id + " nije pronađena."));
-
-        entity.setNaziv(dto.getNaziv());
-        entity.setOpis(dto.getOpis());
-        entity.setDeleted(dto.isDeleted());
-
-        if (dto.getDepartman() != null && dto.getDepartman().getId() != null) {
-            Departman departman = departmanRepository.findById(dto.getDepartman().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departman sa ID " + dto.getDepartman().getId() + " nije pronađen."));
-            entity.setDepartman(departman);
-        } else {
-            entity.setDepartman(null);
-        }
-
-        if (dto.getTipoviStudija() != null) {
-            entity.getTipoviStudija().clear();
-            for (var tipDto : dto.getTipoviStudija()) {
-                TipStudija tipStudija = tipStudijaRepository.findById(tipDto.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("Tip studija sa ID " + tipDto.getId() + " nije pronađen."));
-                entity.getTipoviStudija().add(tipStudija);
-            }
-        } else {
-            entity.getTipoviStudija().clear();
-        }
-
-        if (dto.getSefKatedre() != null && dto.getSefKatedre().getId() != null) {
-            Profesor sef = profesorRepository.findById(dto.getSefKatedre().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Profesor (šef katedre) sa ID " + dto.getSefKatedre().getId() + " nije pronađen."));
-            entity.setSefKatedre(sef);
-        } else {
-            entity.setSefKatedre(null);
-        }
-        
-        entity = katedraRepository.save(entity);
-        return toDTO(entity);
+        Katedra updatedKatedra = katedraRepository.save(katedra);
+        return toSimpleDTO(updatedKatedra);
     }
 
     @Override
     public void delete(Long id) {
-        if (!katedraRepository.existsById(id)) {
-            throw new EntityNotFoundException("Katedra sa ID " + id + " ne postoji.");
-        }
-        katedraRepository.deleteById(id);
+        Katedra katedra = katedraRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Katedra nije pronađena"));
+        katedra.setDeleted(true);
+        katedraRepository.save(katedra);
     }
 
+    @Override
+    public List<KatedraDTO> findByDepartmanId(Long departmanId) {
+        return katedraRepository.findByDepartmanId(departmanId).stream()
+            .map(this::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<KatedraDTO> findAllAktivne() {
+        return katedraRepository.findByDeletedFalse().stream()
+            .map(this::toSimpleDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<KatedraDTO> findAllAdmin() {
+        return katedraRepository.findAllSortiranoPoAktivnostiIFakultetu().stream()
+            .map(this::toSimpleDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<KatedraDTO> findAktivneByDepartmanId(Long departmanId) {
+        return katedraRepository.findByDepartmanIdAndDeletedFalse(departmanId).stream()
+            .map(this::toSimpleDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setDeleted(Long id, boolean deleted) {
+        Katedra katedra = katedraRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Katedra nije pronađena"));
+        katedra.setDeleted(deleted);
+        katedraRepository.save(katedra);
+    }
+
+    // Privatna metoda za mapiranje u kompleksni DTO
     private KatedraDTO toDTO(Katedra entity) {
         KatedraDTO dto = new KatedraDTO();
-
         dto.setId(entity.getId());
         dto.setNaziv(entity.getNaziv());
         dto.setOpis(entity.getOpis());
         dto.setDeleted(entity.isDeleted());
-
-        // Departman
-        if (entity.getDepartman() != null) {
-            var d = entity.getDepartman();
-            var departmanDTO = new com.sirmium.departman.dto.DepartmanDTO();
-            departmanDTO.setId(d.getId());
-            departmanDTO.setNaziv(d.getNaziv());
-            dto.setDepartman(departmanDTO);
-        }
-
-        // Tipovi studija – prikaz samo aktivnih
-        if (entity.getTipoviStudija() != null) {
-            List<com.sirmium.tipstudija.dto.TipStudijaDTO> tipDtoList = entity.getTipoviStudija().stream()
-                    .filter(t -> !t.isDeleted()) // filtriramo samo aktivne
-                    .map(t -> {
-                        var tipDto = new com.sirmium.tipstudija.dto.TipStudijaDTO();
-                        tipDto.setId(t.getId());
-                        tipDto.setTip(t.getTip());
-                        return tipDto;
-                    })
-                    .collect(Collectors.toList());
-            dto.setTipoviStudija(tipDtoList);
-        }
-
-        // Šef katedre
-        if (entity.getSefKatedre() != null) {
-            dto.setSefKatedre(profesorService.toDTO(entity.getSefKatedre()));
-        }
+        
+        // Ostala mapiranja (predmeti, tipoviStudija, itd.) možete dodati kasnije
+        // kada implementirate odgovarajuće servise
         
         return dto;
     }
 
-    private Katedra toEntity(KatedraDTO dto) {
-        Katedra entity = new Katedra();
-
-        entity.setId(dto.getId());
-        entity.setNaziv(dto.getNaziv());
-        entity.setOpis(dto.getOpis());
-        entity.setDeleted(dto.isDeleted());
-
-        if (dto.getDepartman() != null && dto.getDepartman().getId() != null) {
-            Departman departman = departmanRepository.findById(dto.getDepartman().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departman sa ID " + dto.getDepartman().getId() + " nije pronađen."));
-            entity.setDepartman(departman);
+    // Privatna metoda za mapiranje u jednostavni DTO
+    private KatedraDTO toSimpleDTO(Katedra entity) {
+        KatedraDTO dto = new KatedraDTO();
+        dto.setId(entity.getId());
+        dto.setNaziv(entity.getNaziv());
+        dto.setOpis(entity.getOpis());
+        dto.setDeleted(entity.isDeleted());
+        
+        // Dodajte osnovne informacije o departmanu i šefu katedre
+        if (entity.getDepartman() != null) {
+            // Možete dodati DepartmanDTO ako želite
         }
-
-        if (dto.getTipoviStudija() != null) {
-            entity.getTipoviStudija().clear();
-            for (var tipDto : dto.getTipoviStudija()) {
-                TipStudija tipStudija = tipStudijaRepository.findById(tipDto.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("Tip studija sa ID " + tipDto.getId() + " nije pronađen."));
-                entity.getTipoviStudija().add(tipStudija);
-            }
+        
+        if (entity.getSefKatedre() != null && entity.getSefKatedre().getUser() != null) {
+            // Možete dodati osnovne informacije o šefu katedre
         }
-
-        if (dto.getSefKatedre() != null && dto.getSefKatedre().getId() != null) {
-            Profesor sef = profesorRepository.findById(dto.getSefKatedre().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Profesor (šef katedre) sa ID " + dto.getSefKatedre().getId() + " nije pronađen."));
-            entity.setSefKatedre(sef);
-        }
-
-        return entity;
+        
+        return dto;
     }
 }
